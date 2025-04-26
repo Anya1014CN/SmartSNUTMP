@@ -1,0 +1,41 @@
+name: smartsnutmp
+description: "An Application for Shaanxi University of Technology on MP."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0' # 如果需要使用 Flutter SDK 3.16.7，请将此处修改为 ">=3.2.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dio: ^5.8.0
+  dio_cookie_manager: ^3.2.0
+  encrypt: ^5.0.3
+  es_compression: <= 2.0.12
+  flex_color_scheme: ^8.1.0
+  mpflutter_wechat_editable: ^0.1.2
+  html: ^0.15.5
+  intl: ^0.20.2
+  mpflutter_build_tools: ^2.8.0
+  mpflutter_core: ^2.8.0
+  mpflutter_wechat_api: ^2.2.4
+  provider: ^6.1.2
+  responsive_builder: ^0.7.1
+  shared_preferences: ^2.5.3
+  url_launcher: ^6.3.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/emulateAccount/stdDetail.json
+    
+  # fonts:
+  #   - family: Roboto
+  #     fonts:
+  #       - asset: fonts/Roboto-Regular.ttf
+  #       - asset: fonts/Roboto-Bold.ttf
+  #   - family: Noto Sans SC
+  #     fonts:
+  #       - asset: fonts/NotoSansSC-Regular.ttf
