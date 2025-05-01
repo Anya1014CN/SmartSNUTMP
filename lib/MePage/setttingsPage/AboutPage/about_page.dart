@@ -94,34 +94,6 @@ class _AboutPage extends State<AboutPage>{
                           children: [
                             ListTile(
                               shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(21),
-                              ),
-                              leading: Icon(Icons.settings_applications, color: Theme.of(context).colorScheme.primary),
-                              trailing: Icon(Icons.chevron_right),
-                              title: Text('通用设置',style: TextStyle(fontSize: GlobalVars.listTileTitle),),
-                              onTap: (){
-                                // Navigator.push(context, MaterialPageRoute(builder: (BuildContext ctx) => GeneralSettingsPage()));
-                              },
-                            ),
-                          ],
-                        )
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(21),
-                      ),
-                      color: Theme.of(context).colorScheme.surfaceDim,
-                      shadowColor: Theme.of(context).colorScheme.onPrimary,
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        child: Column(
-                          children: [
-                            ListTile(
-                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(21),
                               ),
                               leading: Icon(Icons.commit_outlined, color: Theme.of(context).colorScheme.primary),
