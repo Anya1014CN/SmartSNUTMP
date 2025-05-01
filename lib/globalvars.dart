@@ -70,7 +70,6 @@ class GlobalVars {
   static String hint = '';
 
   //用户设置相关
-  static bool settingsApplied = true;
   static List settingsTotal = [];
   static int fontsizeint = 1;//0 - 小；1 - 中；2 - 大
   static int darkModeint = 0;//0 - 跟随系统；1 - 始终开启；2 - 始终关闭

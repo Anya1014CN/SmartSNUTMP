@@ -898,7 +898,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.themeColor = 0;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -921,7 +920,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.themeColor = 1;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -944,7 +942,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.themeColor = 2;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -967,7 +964,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.themeColor = 3;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -990,7 +986,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.themeColor = 4;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -1013,7 +1008,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.themeColor = 5;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -1036,7 +1030,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.themeColor = 6;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -1059,7 +1052,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.themeColor = 7;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -1111,7 +1103,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.darkModeint = 0;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -1132,7 +1123,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.darkModeint = 1;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
@@ -1153,7 +1143,6 @@ class _SettingsPage extends State<SettingsPage>{
                         if(mounted){
                           setState((){
                             GlobalVars.darkModeint = 2;
-                            GlobalVars.settingsApplied = false;
                           });
                         }
                         saveSettings();
