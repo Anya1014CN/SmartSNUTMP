@@ -2118,7 +2118,7 @@ class _HomeState extends State<Home>{
     Dio dio = Dio();
     late Response smartSNUTNotifyResponse;
     try{
-      smartSNUTNotifyResponse = await dio.get('https://apis.smartsnut.cn/MP/Announcement/AnnouncementMP.json');
+      smartSNUTNotifyResponse = await dio.get('https://apis.smartsnut.cn/MP/Announcement/Announcement.json');
     }catch(e){
       return;
     }
