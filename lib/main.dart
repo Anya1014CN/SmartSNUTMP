@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:smartsnutmp/AppPage/app_page.dart' deferred as appPage;
 import 'package:smartsnutmp/AppPage/courseTable/coursetable_page.dart';
 import 'package:smartsnutmp/AppPage/electricMeter/electricmeter_page.dart';
@@ -35,7 +36,12 @@ void main() async {
   await function_Modules.loadLibrary();
   GlobalVars.globalPrefs = await SharedPreferences.getInstance();
   await function_Modules.Modules.readSettings();
-  runMPApp(const SmartSNUT());
+  runMPApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const SmartSNUT(),
+    )
+  );
 
   /**
    * 务必保留这段代码，否则第一次调用 wx 接口会提示异常。
@@ -129,20 +135,9 @@ class SmartSNUT extends StatefulWidget {
 
 class _SmartSNUTState extends State<SmartSNUT>{
 
-  //应用设置
-  applySettings() async {
-    if(GlobalVars.settingsApplied == false){
-      setState(() {});
-      GlobalVars.settingsApplied = true;
-    }
-    await Future.delayed(Duration(seconds: 1));
-    applySettings();
-  }
-
   @override
   void initState() {
     super.initState();
-    applySettings();
     MPFlutterDarkmodeManager.addThemeListener(() {
       setState(() {});
     });
@@ -150,62 +145,66 @@ class _SmartSNUTState extends State<SmartSNUT>{
   
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '智慧陕理',
-      theme: FlexThemeData.light(
-        scheme: (GlobalVars.themeColor == 0)? FlexScheme.amber:(GlobalVars.themeColor == 1)? FlexScheme.deepOrangeM3:(GlobalVars.themeColor == 2)? FlexScheme.mandyRed:(GlobalVars.themeColor == 3)? FlexScheme.deepBlue:(GlobalVars.themeColor == 4)? FlexScheme.mallardGreen:(GlobalVars.themeColor == 5)? FlexScheme.pinkM3:(GlobalVars.themeColor == 6)? FlexScheme.espresso:FlexScheme.shark,
-        subThemesData: const FlexSubThemesData(
-          interactionEffects: true,
-          tintedDisabledControls: true,
-          useM2StyleDividerInM3: true,
-          inputDecoratorIsFilled: true,
-          inputDecoratorBorderType: FlexInputBorderType.outline,
-          alignedDropdown: true,
-          navigationRailUseIndicator: true,
-          navigationRailLabelType: NavigationRailLabelType.all,
-        ),
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
-      ),
-      darkTheme: FlexThemeData.dark(
-        scheme: (GlobalVars.themeColor == 0)? FlexScheme.amber:(GlobalVars.themeColor == 1)? FlexScheme.deepOrangeM3:(GlobalVars.themeColor == 2)? FlexScheme.mandyRed:(GlobalVars.themeColor == 3)? FlexScheme.deepBlue:(GlobalVars.themeColor == 4)? FlexScheme.mallardGreen:(GlobalVars.themeColor == 5)? FlexScheme.pinkM3:(GlobalVars.themeColor == 6)? FlexScheme.espresso:FlexScheme.shark,
-        subThemesData: const FlexSubThemesData(
-          interactionEffects: true,
-          tintedDisabledControls: true,
-          blendOnColors: true,
-          useM2StyleDividerInM3: true,
-          inputDecoratorIsFilled: true,
-          inputDecoratorBorderType: FlexInputBorderType.outline,
-          alignedDropdown: true,
-          navigationRailUseIndicator: true,
-          navigationRailLabelType: NavigationRailLabelType.all,
-        ),
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
-      ),
-      themeMode: (GlobalVars.darkModeint == 0)? (MPFlutterDarkmodeManager.isDarkmode())? ThemeMode.dark:ThemeMode.light:(GlobalVars.darkModeint == 1)? ThemeMode.dark:ThemeMode.light,
-      home: SplashPage(),
-      routes: {
-        '/LoginPage': (context) => LoginPage(),
-        '/home': (context) => HomePage(),
-        '/appPage': (context) => appPage.AppPage(),
-        '/linkPage': (context) => linkPage.LinkPage(),
-        '/mePage': (context) => mePage.MePage(),
-        // AppPage
-        '/AppPage/CourseTablePage': (context) => CourseTablePage(),
-        '/AppPage/Electricmeterpage': (context) => Electricmeterpage(),
-        '/AppPage/PublicFreePage': (context) => PublicFreePage(),
-        '/AppPage/SchoolNetworkPage': (context) => SchoolNetworkPage(),
-        '/AppPage/StdDetailPage': (context) => StdDetailPage(),
-        '/AppPage/StdExamPage': (context) => StdExamPage(),
-        '/AppPage/StdGradesPage': (context) => StdGradesPage(),
-        // MePage
-        '/MePage/ElectricmeterbindPage': (context) => ElectricmeterbindPage(),
-        '/MePage/Guidepage': (context) => Guidepage(),
-        '/MePage/SettingsPage': (context) => SettingsPage(),
-      },
-      /**
-       * 务必保留 MPNavigatorObserver，否则小程序的路由会出问题。
-       */
-      navigatorObservers: [MPNavigatorObserver()],
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          title: '智慧陕理',
+          theme: FlexThemeData.light(
+            scheme: themeProvider.colorScheme,
+            subThemesData: const FlexSubThemesData(
+              interactionEffects: true,
+              tintedDisabledControls: true,
+              useM2StyleDividerInM3: true,
+              inputDecoratorIsFilled: true,
+              inputDecoratorBorderType: FlexInputBorderType.outline,
+              alignedDropdown: true,
+              navigationRailUseIndicator: true,
+              navigationRailLabelType: NavigationRailLabelType.all,
+            ),
+            visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          ),
+          darkTheme: FlexThemeData.dark(
+            scheme: themeProvider.colorScheme,
+            subThemesData: const FlexSubThemesData(
+              interactionEffects: true,
+              tintedDisabledControls: true,
+              blendOnColors: true,
+              useM2StyleDividerInM3: true,
+              inputDecoratorIsFilled: true,
+              inputDecoratorBorderType: FlexInputBorderType.outline,
+              alignedDropdown: true,
+              navigationRailUseIndicator: true,
+              navigationRailLabelType: NavigationRailLabelType.all,
+            ),
+            visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          ),
+          themeMode: themeProvider.themeMode,
+          home: SplashPage(),
+          routes: {
+            '/LoginPage': (context) => LoginPage(),
+            '/home': (context) => HomePage(),
+            '/appPage': (context) => appPage.AppPage(),
+            '/linkPage': (context) => linkPage.LinkPage(),
+            '/mePage': (context) => mePage.MePage(),
+            // AppPage
+            '/AppPage/CourseTablePage': (context) => CourseTablePage(),
+            '/AppPage/Electricmeterpage': (context) => Electricmeterpage(),
+            '/AppPage/PublicFreePage': (context) => PublicFreePage(),
+            '/AppPage/SchoolNetworkPage': (context) => SchoolNetworkPage(),
+            '/AppPage/StdDetailPage': (context) => StdDetailPage(),
+            '/AppPage/StdExamPage': (context) => StdExamPage(),
+            '/AppPage/StdGradesPage': (context) => StdGradesPage(),
+            // MePage
+            '/MePage/ElectricmeterbindPage': (context) => ElectricmeterbindPage(),
+            '/MePage/Guidepage': (context) => Guidepage(),
+            '/MePage/SettingsPage': (context) => SettingsPage(),
+          },
+          /**
+           * 务必保留 MPNavigatorObserver，否则小程序的路由会出问题。
+           */
+          navigatorObservers: [MPNavigatorObserver()],
+        );
+      } ,
     );
   }
 }
@@ -363,5 +362,41 @@ class _HomePageState extends State<HomePage> {
           },
         )
     );
+  }
+}
+
+// 主题管理类
+class ThemeProvider extends ChangeNotifier {
+  int _themeColor = GlobalVars.themeColor;
+  int _darkModeInt = GlobalVars.darkModeint;
+  
+  ThemeMode get themeMode {
+    if (_darkModeInt == 0) {
+      return MPFlutterDarkmodeManager.isDarkmode() ? ThemeMode.dark : ThemeMode.light;
+    } else {
+      return _darkModeInt == 1 ? ThemeMode.dark : ThemeMode.light;
+    }
+  }
+  
+  FlexScheme get colorScheme {
+    switch (_themeColor) {
+      case 0: return FlexScheme.amber;
+      case 1: return FlexScheme.deepOrangeM3;
+      case 2: return FlexScheme.mandyRed;
+      case 3: return FlexScheme.deepBlue;
+      case 4: return FlexScheme.mallardGreen;
+      case 5: return FlexScheme.pinkM3;
+      case 6: return FlexScheme.espresso;
+      case 7: return FlexScheme.shark;
+      default: return FlexScheme.amber;
+    }
+  }
+  
+  void updateSettings() {
+    if (_themeColor != GlobalVars.themeColor || _darkModeInt != GlobalVars.darkModeint) {
+      _themeColor = GlobalVars.themeColor;
+      _darkModeInt = GlobalVars.darkModeint;
+      notifyListeners();
+    }
   }
 }

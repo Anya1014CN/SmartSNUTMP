@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:mpflutter_core/mpflutter_core.dart';
 import 'package:mpflutter_wechat_editable/mpflutter_wechat_editable.dart';
+import 'package:provider/provider.dart';
 import 'package:smartsnutmp/MePage/electricMeterBindPage/electricmeterbind_page.dart';
 import 'package:smartsnutmp/function_modules.dart';
 import 'package:smartsnutmp/globalvars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smartsnutmp/main.dart';
 
 //开源许可
 String licenseTitle = '';
@@ -70,6 +72,7 @@ class _SettingsPage extends State<SettingsPage>{
     if(mounted){
       setState(() {});
     }
+    Provider.of<ThemeProvider>(context, listen: false).updateSettings();
     await GlobalVars.globalPrefs.setString('Settings', jsonEncode(GlobalVars.settingsTotal));
   }
 
