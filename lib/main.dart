@@ -10,8 +10,12 @@ import 'package:smartsnutmp/AppPage/stdGrades/stdgrades_page.dart';
 import 'package:smartsnutmp/Home/home.dart' deferred as home;
 import 'package:smartsnutmp/LinkPage/link_page.dart' deferred as linkPage;
 import 'package:smartsnutmp/MePage/electricMeterBindPage/electricmeterbind_page.dart';
-import 'package:smartsnutmp/MePage/guidePage/guide_page.dart';
 import 'package:smartsnutmp/MePage/me_page.dart'deferred as mePage;
+import 'package:smartsnutmp/MePage/setttingsPage/AboutPage/about_page.dart';
+import 'package:smartsnutmp/MePage/setttingsPage/AccountSettingsPage/accountsettings_page.dart';
+import 'package:smartsnutmp/MePage/setttingsPage/CourseTableSettingsPage/coursetablesettings_page.dart';
+import 'package:smartsnutmp/MePage/setttingsPage/GeneralSettingsPage/generalsettings_page.dart';
+import 'package:smartsnutmp/MePage/setttingsPage/HomePageSettingsPage/homepagesettings_page.dart';
 import 'package:smartsnutmp/MePage/setttingsPage/settings_page.dart';
 import 'package:smartsnutmp/function_modules.dart'deferred as function_Modules;
 import 'package:smartsnutmp/globalvars.dart';
@@ -196,8 +200,13 @@ class _SmartSNUTState extends State<SmartSNUT>{
             '/AppPage/StdGradesPage': (context) => StdGradesPage(),
             // MePage
             '/MePage/ElectricmeterbindPage': (context) => ElectricmeterbindPage(),
-            '/MePage/Guidepage': (context) => Guidepage(),
             '/MePage/SettingsPage': (context) => SettingsPage(),
+            // SettingsPage
+            '/SettingsPage/AboutPage': (context) => AboutPage(),
+            '/SettingsPage/AccountSettingsPage': (context) => AccountSettingsPage(),
+            '/SettingsPage/CourseTableSettingsPage': (context) => CourseTableSettingsPage(),
+            '/SettingsPage/GeneralSettingsPage': (context) => GeneralSettingsPage(),
+            '/SettingsPage/HomePageSettingsPage': (context) => HomePageSettingsPage(),
           },
           /**
            * 务必保留 MPNavigatorObserver，否则小程序的路由会出问题。

@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:provider/provider.dart';
 import 'package:smartsnutmp/globalvars.dart';
 import 'package:dio/dio.dart';
+import 'package:smartsnutmp/main.dart';
 
 class Modules {
   static final String apiUrl = 'https://apis.smartsnut.cn/WebAPI';
@@ -91,6 +94,25 @@ class Modules {
     return message;
   }
   
+  //保存设置到本地
+  static saveSettings(BuildContext context) async {
+    GlobalVars.settingsTotal.clear();
+    GlobalVars.settingsTotal.add({
+      'fontSize': GlobalVars.fontsizeint,
+      'DarkMode': GlobalVars.darkModeint,
+      'ThemeColor': GlobalVars.themeColor,
+      'showSatCourse': GlobalVars.showSatCourse,
+      'showSunCourse': GlobalVars.showSunCourse,
+      'courseBlockColorsint': GlobalVars.courseBlockColorsInt,
+      'switchTomorrowCourseAfter20': GlobalVars.switchTomorrowCourseAfter20,
+      'switchNextWeekCourseAfter20': GlobalVars.switchNextWeekCourseAfter20,
+      'showTzgg': GlobalVars.showTzgg,
+      'betaDialogShowCount': GlobalVars.betaDialogShowCount,
+    });
+    Provider.of<ThemeProvider>(context, listen: false).updateSettings();
+    await GlobalVars.globalPrefs.setString('Settings', jsonEncode(GlobalVars.settingsTotal));
+  }
+
   //设置字体大小
   static setFontSize() {
     double changevalue = 0;
