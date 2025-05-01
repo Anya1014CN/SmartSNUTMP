@@ -1,8 +1,12 @@
 import 'package:mpflutter_core/mpflutter_core.dart';
+import 'package:mpflutter_wechat_editable/mpflutter_wechat_editable.dart';
 import 'package:smartsnutmp/MePage/electricMeterBindPage/electricmeterbind_page.dart';
 import 'package:smartsnutmp/function_modules.dart';
 import 'package:smartsnutmp/globalvars.dart';
 import 'package:flutter/material.dart';
+
+//用于存储外部链接的完整URL
+Uri url = Uri.parse("uri");
 
 bool isloggedin = false;//判断是否已经登录
 
@@ -209,7 +213,8 @@ class _MePageState extends State<MePage>{
                                 '教程&说明',
                                 'guide',
                                 () {
-                                  Navigator.pushNamed(context, '/MePage/Guidepage');
+                                  url = Uri.parse('https://smartsnut.cn/Docs/UserManual/');
+                                  launchURL();
                                 },
                               ),
                             ),
@@ -384,4 +389,44 @@ class _MePageState extends State<MePage>{
     }
   }
 
+  // 打开链接
+  void launchURL() async {
+    textUrlController.text = url.toString();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        scrollable: true,
+        title: Row(
+          children: [
+            Icon(Icons.info),
+            SizedBox(width: 8),
+            Text('提示：', style: TextStyle(fontSize: GlobalVars.alertdialogTitle))
+          ],
+        ),
+        content: Column(
+          children: [
+            Text('由于小程序能力受限，请手动复制链接后粘贴到浏览器访问',
+            style: TextStyle(fontSize: GlobalVars.alertdialogTitle)),
+            MPFlutterTextField(
+              controller: textUrlController,
+              readOnly: true,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.link_off_outlined),
+              ),
+            )
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              if (context.mounted) {
+                Navigator.pop(context);
+              }
+            },
+            child: Text('确定'),
+          ),
+        ],
+      ),
+    );
+  }
 }
