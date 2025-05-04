@@ -259,6 +259,65 @@ class _AppPageState extends State<AppPage> {
                 ),
               ),
 
+              // 学工系统卡片
+              Container(
+                padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      width: 4,
+                      height: 18,
+                      margin: EdgeInsets.only(right: 8),
+                    ),
+                    Text(
+                      '学工系统',
+                      style: TextStyle(
+                          fontSize: GlobalVars.dividerTitle,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                  ],
+                ),
+              ),
+              // 学工系统卡片
+              Container(
+                padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+                child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  shadowColor: Theme.of(context).colorScheme.onPrimary.withAlpha(77),
+                  color: Theme.of(context).colorScheme.surfaceDim,
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: buildFunctionButton(
+                            context,
+                            '班级通讯录',
+                            'contacts',
+                            () {
+                              Navigator.pushNamed(context, '/AppPage/ClassContactsPage');
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: SizedBox(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+        
+
               // 底部间隔
               SizedBox(height: 20),
             ]),

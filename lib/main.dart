@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:smartsnutmp/AppPage/app_page.dart' deferred as appPage;
+import 'package:smartsnutmp/AppPage/classContacts/classcontacts_page.dart';
 import 'package:smartsnutmp/AppPage/courseTable/coursetable_page.dart';
 import 'package:smartsnutmp/AppPage/electricMeter/electricmeter_page.dart';
 import 'package:smartsnutmp/AppPage/publicFree/publicfree_page.dart';
@@ -191,6 +192,7 @@ class _SmartSNUTState extends State<SmartSNUT>{
             '/linkPage': (context) => linkPage.LinkPage(),
             '/mePage': (context) => mePage.MePage(),
             // AppPage
+            '/AppPage/ClassContactsPage': (context) => ClassContactsPage(),
             '/AppPage/CourseTablePage': (context) => CourseTablePage(),
             '/AppPage/Electricmeterpage': (context) => Electricmeterpage(),
             '/AppPage/PublicFreePage': (context) => PublicFreePage(),
