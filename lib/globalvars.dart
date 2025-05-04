@@ -4,9 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalVars {
   //当前版本号
-  static String versionCodeString = '1.0.0';
-  static int versionCodeInt = 1000000;
-  static String versionReleaseDate = '2025-04-26';
+  static String versionCodeString = '1.2.3';
+  static int versionCodeInt = 1002003;
+  static String versionReleaseDate = '2025-05-04';
 
   // Assets 目录
   static String cloudAssets = 'https://smartsnut.cn/CloudAssets/';
