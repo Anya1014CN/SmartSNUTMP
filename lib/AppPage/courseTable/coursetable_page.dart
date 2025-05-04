@@ -8,9 +8,6 @@ import 'package:intl/intl.dart';
 //验证码输入框
 TextEditingController textCaptchaController = TextEditingController();
 
-//判断是否需要联网下载课表
-bool needRefresh = false;
-
 //判断是否已经弹出 自动切换周次 的提示框
 bool isShowAutoSwitchWeek = false;
 
@@ -212,7 +209,6 @@ class _CourseTablePage extends State<CourseTablePage>{
     }else{
       if(mounted){
         setState(() {
-          needRefresh = true;
           currentYearInt = semestersData.length - 1;
           currentYearName = semestersName[semestersName.length - 1]['name'];
           //获取当前月份
@@ -230,11 +226,7 @@ class _CourseTablePage extends State<CourseTablePage>{
       }
       saveSelectedTY();
     }
-    if(needRefresh){
-      getCourseTable();
-    }else{
-      readSchoolCalendarInfo();
-    }
+    readSchoolCalendarInfo();
   }
 
   //读取校历相关信息
@@ -1394,6 +1386,10 @@ class _CourseTablePage extends State<CourseTablePage>{
       getWeekDates();
       readStdAccount();
       readSemesterInfo();
+      //判断是否需要刷新课表
+      if(GlobalVars.autoRefreshCourseTable == true && DateTime.now().millisecondsSinceEpoch - GlobalVars.lastCourseTableRefreshTime >= 86400000){
+        getCourseTable();
+      }
     });
   }
 
@@ -2292,9 +2288,7 @@ class _CourseTablePage extends State<CourseTablePage>{
     List getCourseTableResponse = await Modules.getCourseTable(userName, passWord,currentYearInt, currentTermInt);
     if(getCourseTableResponse[0]['statue'] == false){
       if(mounted){
-        setState(() {
-          needRefresh = false;
-        });
+        setState(() {});
         Navigator.pop(context);
         showDialog(
           context: context,
@@ -2332,13 +2326,14 @@ class _CourseTablePage extends State<CourseTablePage>{
 
     weekDiff = 0;
     currentWeekInt = userSelectedWeekInt;
+    
+    GlobalVars.lastCourseTableRefreshTime = DateTime.now().millisecondsSinceEpoch;
+    await Modules.saveSettings(context);
     readSchoolCalendarInfo();
     getWeekDates();
     if(mounted){
       Navigator.pop(context);
-      setState(() {
-        needRefresh = false;
-      });
+      setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('课表数据刷新成功'),

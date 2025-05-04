@@ -1274,6 +1274,10 @@ class _HomeState extends State<Home>{
       if(announcementState == 0){
         getSmartSNUTAnnouncement();
       }
+       //判断是否需要刷新课表
+       if(GlobalVars.autoRefreshCourseTable == true && DateTime.now().millisecondsSinceEpoch - GlobalVars.lastCourseTableRefreshTime >= 86400000){
+         getCourseTable();
+       }
       await Modules.refreshState();
       setState(() {});
     });
@@ -2162,6 +2166,101 @@ class _HomeState extends State<Home>{
         isLoading = false;
         loadSuccess = true;
       });
+    }
+  }
+
+  getCourseTable() async {
+    GlobalVars.operationCanceled = false;
+    GlobalVars.loadingHint = '正在刷新课表数据...';
+    if(mounted){
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return StatefulBuilder(
+            builder: (context, setState) => AlertDialog(
+              scrollable: true,
+              title: Text('请稍后...',style: TextStyle(fontSize: GlobalVars.alertdialogTitle)),
+              content: Column(
+                children: [
+                  SizedBox(height: 10,),
+                  CircularProgressIndicator(),
+                  SizedBox(height: 10,),
+                  Text(GlobalVars.loadingHint,style: TextStyle(fontSize: GlobalVars.alertdialogContent))
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    GlobalVars.operationCanceled = true;
+                    Navigator.pop(context);
+                  },
+                  child: Text('取消'),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
+    List getCourseTableResponse = await Modules.getCourseTable(userName, passWord,currentYearInt, currentTermInt);
+    if(getCourseTableResponse[0]['statue'] == false){
+      if(mounted){
+        setState(() {});
+        Navigator.pop(context);
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('错误',style: TextStyle(fontSize: GlobalVars.alertdialogTitle)),
+              content: Text(getCourseTableResponse[0]['message'],style: TextStyle(fontSize: GlobalVars.alertdialogContent)),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('确定'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+      return;
+    }
+
+    //保存课表
+    await GlobalVars.globalPrefs.setString('courseTableStd-courseTable-${getCourseTableResponse[0]['semesterId']}', jsonEncode(getCourseTableResponse[0]['courseTableData']));
+
+    //保存校历
+    List schoolCalendar = [];
+    schoolCalendar.clear();
+    schoolCalendar.add({
+      'termStart': getCourseTableResponse[0]['termStart'],
+      'termEnd': getCourseTableResponse[0]['termEnd'],
+      'termWeeks': getCourseTableResponse[0]['termWeeks'],
+    });
+    GlobalVars.globalPrefs.setString('schoolCalendar-${getCourseTableResponse[0]['semesterId']}', jsonEncode(getCourseTableResponse[0]['schoolCalendarData']));
+
+    weekDiff = 0;
+    currentWeekInt = userSelectedWeekInt;
+    
+    GlobalVars.lastCourseTableRefreshTime = DateTime.now().millisecondsSinceEpoch;
+    await Modules.saveSettings(context);
+    readSchoolCalendarInfo();
+    if(mounted){
+      Navigator.pop(context);
+      setState(() {});
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('课表数据刷新成功'),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          margin: EdgeInsets.all(10),
+        ),
+      );
     }
   }
 

@@ -104,6 +104,8 @@ class Modules {
       'showSatCourse': GlobalVars.showSatCourse,
       'showSunCourse': GlobalVars.showSunCourse,
       'courseBlockColorsint': GlobalVars.courseBlockColorsInt,
+      'autoRefreshCourseTable': GlobalVars.autoRefreshCourseTable,
+      'lastCourseTableRefreshTime': GlobalVars.lastCourseTableRefreshTime,
       'switchTomorrowCourseAfter20': GlobalVars.switchTomorrowCourseAfter20,
       'switchNextWeekCourseAfter20': GlobalVars.switchNextWeekCourseAfter20,
       'showTzgg': GlobalVars.showTzgg,
@@ -203,6 +205,8 @@ class Modules {
       GlobalVars.showSatCourse = GlobalVars.settingsTotal[0]['showSatCourse']?? true;
       GlobalVars.showSunCourse = GlobalVars.settingsTotal[0]['showSunCourse']?? true;
       GlobalVars.courseBlockColorsInt = GlobalVars.settingsTotal[0]['courseBlockColorsint']?? 0;
+      GlobalVars.autoRefreshCourseTable = GlobalVars.settingsTotal[0]['autoRefreshCourseTable']?? true;
+      GlobalVars.lastCourseTableRefreshTime = GlobalVars.settingsTotal[0]['lastCourseTableRefreshTime']?? 0;
       GlobalVars.switchTomorrowCourseAfter20 = GlobalVars.settingsTotal[0]['switchTomorrowCourseAfter20']?? true;
       GlobalVars.switchNextWeekCourseAfter20 = GlobalVars.settingsTotal[0]['switchNextWeekCourseAfter20']?? true;
       GlobalVars.showTzgg = GlobalVars.settingsTotal[0]['showTzgg']?? false;
@@ -213,6 +217,8 @@ class Modules {
       GlobalVars.showSatCourse = true;
       GlobalVars.showSunCourse = true;
       GlobalVars.courseBlockColorsInt = 0;
+      GlobalVars.autoRefreshCourseTable = true;
+      GlobalVars.lastCourseTableRefreshTime = 0;
       GlobalVars.switchTomorrowCourseAfter20 = true;
       GlobalVars.switchNextWeekCourseAfter20 = true;
       GlobalVars.showTzgg = false;

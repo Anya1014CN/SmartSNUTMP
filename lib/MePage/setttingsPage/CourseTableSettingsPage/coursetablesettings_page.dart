@@ -95,6 +95,22 @@ class _CourseTableSettingsPage extends State<CourseTableSettingsPage>{
                               shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(21),
                               ),
+                              leading: Icon(Icons.refresh_outlined, color: Theme.of(context).colorScheme.primary),
+                              trailing: Switch(
+                                value: GlobalVars.autoRefreshCourseTable,
+                                onChanged: (value) {
+                                  GlobalVars.switchNextWeekCourseAfter20 = value;
+                                  Modules.saveSettings(context);
+                                },
+                              ),
+                              title: Text('自动更新课表',style: TextStyle(fontSize: GlobalVars.listTileTitle),),
+                              subtitle: Text('当课表数据 >= 24 小时未刷新时，自动从教务系统获取最新的课表数据',style: TextStyle(fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.primary,fontSize: GlobalVars.listTileSubtitle),),
+                            ),
+                            Divider(height: 5,indent: 20,endIndent: 20,),
+                            ListTile(
+                              shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(21),
+                              ),
                               leading: Icon(Icons.calendar_view_week, color: Theme.of(context).colorScheme.primary),
                               trailing: Switch(
                                 value: GlobalVars.switchNextWeekCourseAfter20,
