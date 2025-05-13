@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 //用于存储外部链接的完整URL
 Uri url = Uri.parse("uri");
-TextEditingController textUrlController = TextEditingController();
 
 //用户数据
 String realName = GlobalVars.realName;
@@ -25,6 +24,7 @@ class SchoolNetworkPage extends StatefulWidget{
 
 class _SchoolNetworkPage extends State<SchoolNetworkPage>{
   final textUsernameController = TextEditingController();
+  TextEditingController textUrlController = TextEditingController();
   bool _showAppBarTitle = false;
 
   @override

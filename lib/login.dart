@@ -9,7 +9,6 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 //用于存储要打开的URL
 Uri url = Uri.parse("uri");
-TextEditingController textUrlController = TextEditingController();
 
 class LoginPage extends StatefulWidget{
   const LoginPage ({super.key});
@@ -26,6 +25,7 @@ class _LoginPageState extends State<LoginPage>{
   final textUsernameController = TextEditingController();
   final textPasswordController = TextEditingController();
   final textCaptchaController = TextEditingController();
+  TextEditingController textUrlController = TextEditingController();
 
   @override
   void initState() {
@@ -423,6 +423,10 @@ class _LoginPageState extends State<LoginPage>{
 
     //保存学期信息
     await GlobalVars.globalPrefs.setString('semestersData', jsonEncode(loginAuthResponse[0]['semestersData']));
+
+    //更新课表刷新时间（不刷新课表）
+    GlobalVars.lastCourseTableRefreshTime = DateTime.now().millisecondsSinceEpoch;
+    await Modules.saveSettings(context);
 
     //添加登录成功的标记
     await GlobalVars.globalPrefs.setString('LoginSuccess', '2');

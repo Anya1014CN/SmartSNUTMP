@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 //用于存储外部链接的完整URL
 Uri url = Uri.parse("uri");
-TextEditingController textUrlController = TextEditingController();
 
 bool loginstate = false;
 
@@ -20,6 +19,8 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+  TextEditingController textUrlController = TextEditingController();
+  
   @override
   void initState() {
     super.initState();

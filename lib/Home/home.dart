@@ -9,15 +9,10 @@ import 'package:dio/dio.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-//文本输入框控制器
-TextEditingController textUrlController = TextEditingController();
 
 //最新版本下载链接
 bool updateChecked = false;
 String latestDownloadLink = '';
-
-//判断是否需要联网下载课表
-bool needRefresh = false;
 
 //学期信息
 String termStart = '';
@@ -113,6 +108,8 @@ class Home extends StatefulWidget{
 }
 
 class _HomeState extends State<Home>{
+  TextEditingController textUrlController = TextEditingController();
+  
   //读取学期相关信息
   readSemesterInfo() async {
     if(GlobalVars.globalPrefs.containsKey('semestersData')){
@@ -152,20 +149,8 @@ class _HomeState extends State<Home>{
     }else{
       if(mounted){
         setState(() {
-          needRefresh = true;
-          currentYearInt = semestersData.length - 1;
-          currentYearName = semestersName[semestersName.length - 1]['name'];
-          //获取当前月份
-          int month = DateTime.now().month;
-          if(month < 9){
-            //如果月份小于9，则选择第二学期
-            currentTermInt = 2;
-            currentTermName = '第二学期';
-          }else{
-            //如果月份大于等于9，则选择第一学期
-            currentTermInt = 1;
-            currentTermName = '第一学期';
-          }
+          currentYearInt = 0;
+          currentYearName = semestersName[0]['name'];
         });
       }
       saveSelectedTY();

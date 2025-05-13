@@ -20,6 +20,7 @@ class MePage extends StatefulWidget{
 }
 
 class _MePageState extends State<MePage>{
+  TextEditingController textUrlController = TextEditingController();
 
   @override
   void initState() {
@@ -32,7 +33,6 @@ class _MePageState extends State<MePage>{
   
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: CustomScrollView(
         slivers: [

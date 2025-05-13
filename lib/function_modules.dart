@@ -150,7 +150,7 @@ class Modules {
     GlobalVars.genericTextLarge = DefaultfontSize.genericTextLarge + changevalue;
   }
 
-  //我的课表
+  //学校官网通知公告
   static Future<List> getNewsList() async {
     //存储返回的信息
     List message = [];
@@ -724,7 +724,7 @@ class Modules {
     return message;
   }
 
-  //获取班级列表
+  //获取班级成员列表
   static Future<List> getClassMemberList(String classId) async {
     //存储返回的信息
     List message = [];

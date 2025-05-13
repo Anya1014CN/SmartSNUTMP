@@ -11,7 +11,6 @@ TextEditingController textBindLinkController = TextEditingController();
 
 //用于存储外部链接的完整URL
 Uri url = Uri.parse("uri");
-TextEditingController textUrlController = TextEditingController();
 
 bool isQuerying = false;
 
@@ -31,6 +30,7 @@ class ElectricmeterbindPage extends StatefulWidget{
 }
 
 class _ElectricmeterbindPageState extends State<ElectricmeterbindPage>{
+  TextEditingController textUrlController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

@@ -10,7 +10,6 @@ String licenseContent = '';
 
 //用于即将打开的链接的完整URL
 Uri url = Uri.parse("uri");
-TextEditingController textUrlController = TextEditingController();
 
 class CourseTableSettingsPage extends StatefulWidget{
   const CourseTableSettingsPage({super.key});
@@ -23,6 +22,7 @@ class CourseTableSettingsPage extends StatefulWidget{
 
 class _CourseTableSettingsPage extends State<CourseTableSettingsPage>{
   bool _showAppBarTitle = false;
+  TextEditingController textUrlController = TextEditingController();
   
   @override
   void initState() {

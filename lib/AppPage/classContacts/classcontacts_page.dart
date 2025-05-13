@@ -5,10 +5,6 @@ import 'package:smartsnutmp/function_modules.dart';
 import 'package:smartsnutmp/globalvars.dart';
 import 'package:flutter/material.dart';
 
-//输入框控制器
-TextEditingController textCaptchaController = TextEditingController();
-TextEditingController textUrlController = TextEditingController();
-
 //班级列表
 String selectedClassName = '';
 int selectedClass = -1;
@@ -22,6 +18,8 @@ class ClassContactsPage extends StatefulWidget {
 
 class _ClassContactsPageState extends State<ClassContactsPage> {
   bool _showAppBarTitle = false;
+
+  TextEditingController textUrlController = TextEditingController();
 
   //读取班级信息
   readClassList() async {
