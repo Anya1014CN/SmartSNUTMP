@@ -1299,10 +1299,6 @@ class _HomeState extends State<Home>{
         slivers: [
           SliverList(
             delegate: SliverChildListDelegate.fixed([
-              FilledButton.tonal(
-                onPressed: () => getCourseTable(),
-                child: Text('manual'),
-              ),
               // 问候语区域
               Container(
                 padding: EdgeInsets.fromLTRB(16, 40, 16, 20),

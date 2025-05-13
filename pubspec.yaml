@@ -2,7 +2,7 @@ name: smartsnutmp
 description: "An Application for Shaanxi University of Technology on MP."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.2.5+1
 
 environment:
   sdk: '>=3.4.0 <4.0.0' # 如果需要使用 Flutter SDK 3.16.7，请将此处修改为 ">=3.2.0 <4.0.0"
