@@ -299,98 +299,99 @@ class _ElectricmeterPageState extends State<Electricmeterpage>{
     );
   }
 
- queryem() async {
-  bool queryemCanceled = false;
-  if(mounted){
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setState) => AlertDialog(
-            scrollable: true,
-            title: Text('请稍后...',style: TextStyle(fontSize: GlobalVars.alertdialogTitle)),
-            content: Column(
-              children: [
-                SizedBox(height: 10,),
-                CircularProgressIndicator(),
-                SizedBox(height: 10,),
-                Text('正在查询...',style: TextStyle(fontSize: GlobalVars.alertdialogContent))
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                  queryemCanceled = true;
-                },
-                child: Text('取消'),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-    for(int i = 0;i <= GlobalVars.emNum - 1;i++){
-      if(queryemCanceled) return;
-      late String electricUserUid;
-      //获取电表 id
-      if(GlobalVars.globalPrefs.containsKey('emBindData-emDetail')){
-        GlobalVars.emDetail = jsonDecode(await GlobalVars.globalPrefs.getString('emBindData-emDetail')!);
-        electricUserUid = GlobalVars.emDetail[i]['bindMeterId'];
-      }
-      String userCode = GlobalVars.emDetail[i]['userCode'];
-      String userAddress = GlobalVars.emDetail[i]['userAddress'];
-      if(queryemCanceled) return;
-      List queryEMResponse = await Modules.queryEM(GlobalVars.wechatUserId, electricUserUid, userCode, userAddress);
-      emstatetotal.add(queryEMResponse[0]['emStateTotal'][0]);
-      if(queryEMResponse[0]['statue'] == false){
-        if(mounted){
-          Navigator.pop(context);
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              title: Row(
+  queryem() async {
+    GlobalVars.operationCanceled = false;
+    if(mounted){
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (context, setState) => AlertDialog(
+              scrollable: true,
+              title: Text('请稍后...',style: TextStyle(fontSize: GlobalVars.alertdialogTitle)),
+              content: Column(
                 children: [
-                  Icon(Icons.error),
-                  SizedBox(width: 8),
-                  Text('错误：',style: TextStyle(fontSize: GlobalVars.alertdialogTitle))
+                  SizedBox(height: 10,),
+                  CircularProgressIndicator(),
+                  SizedBox(height: 10,),
+                  Text('正在查询...',style: TextStyle(fontSize: GlobalVars.alertdialogContent))
                 ],
               ),
-              content: Text('查询失败，请稍后再试',style: TextStyle(fontSize: GlobalVars.alertdialogContent)),
               actions: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text('确定'),
+                  onPressed: (){
+                    Navigator.pop(context);
+                    GlobalVars.operationCanceled = true;
+                  },
+                  child: Text('取消'),
                 ),
               ],
             ),
           );
-          setState(() {
-            isQuerying = false;
-          });
+        },
+      );
+    }
+
+      for(int i = 0;i <= GlobalVars.emNum - 1;i++){
+        if(GlobalVars.operationCanceled) return;
+        late String electricUserUid;
+        //获取电表 id
+        if(GlobalVars.globalPrefs.containsKey('emBindData-emDetail')){
+          GlobalVars.emDetail = jsonDecode(await GlobalVars.globalPrefs.getString('emBindData-emDetail')!);
+          electricUserUid = GlobalVars.emDetail[i]['bindMeterId'];
         }
-        return;
+        String userCode = GlobalVars.emDetail[i]['userCode'];
+        String userAddress = GlobalVars.emDetail[i]['userAddress'];
+
+        if(GlobalVars.operationCanceled) return;
+        List queryEMResponse = await Modules.queryEM(GlobalVars.wechatUserId, electricUserUid, userCode, userAddress);
+        emstatetotal.add(queryEMResponse[0]['emStateTotal'][0]);
+        if(queryEMResponse[0]['statue'] == false){
+          if(mounted){
+            Navigator.pop(context);
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Row(
+                  children: [
+                    Icon(Icons.error),
+                    SizedBox(width: 8),
+                    Text('错误：',style: TextStyle(fontSize: GlobalVars.alertdialogTitle))
+                  ],
+                ),
+                content: Text('查询失败，请稍后再试',style: TextStyle(fontSize: GlobalVars.alertdialogContent)),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('确定'),
+                  ),
+                ],
+              ),
+            );
+            setState(() {
+              isQuerying = false;
+            });
+          }
+          return;
+        }
+      }
+
+      if(mounted){
+        if(GlobalVars.operationCanceled) return;
+        setState(() {
+          isQuerying = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('电表数据查询成功'),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: EdgeInsets.all(10),
+          ),
+        );
+        Navigator.pop(context);
       }
     }
-
-    if(mounted){
-      setState(() {
-        isQuerying = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('电表数据查询成功'),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          margin: EdgeInsets.all(10),
-        ),
-      );
-      Navigator.pop(context);
-    }
-  }
-
 }

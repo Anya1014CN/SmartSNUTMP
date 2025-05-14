@@ -784,12 +784,15 @@ class _StdGradesPageState extends State<StatefulWidget>{
       );
     }
 
+    if(GlobalVars.operationCanceled) return;
     List getStdGradesResponse = await Modules.getStdGrades(userName, passWord, currentYearInt, currentTermInt);
     
     //保存成绩数据
+    if(GlobalVars.operationCanceled) return;
     await GlobalVars.globalPrefs.setString('stdGrades-stdGrades-${getStdGradesResponse[0]['semesterId']}', jsonEncode(getStdGradesResponse[0]['stdGradesTotal']));
 
     if(mounted){
+      if(GlobalVars.operationCanceled) return;
       setState(() {
         stdGradesTotal = getStdGradesResponse[0]['stdGradesTotal'];
       });
@@ -798,6 +801,7 @@ class _StdGradesPageState extends State<StatefulWidget>{
     readSemesterInfo();
 
     if(mounted){
+      if(GlobalVars.operationCanceled) return;
       setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

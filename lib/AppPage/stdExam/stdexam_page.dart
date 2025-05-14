@@ -853,9 +853,11 @@ class _StdExamPageState extends State<StdExamPage>{
       );
     }
 
+    if(GlobalVars.operationCanceled) return;
     List getStdExamResponse = await Modules.getStdExam(userName, passWord,currentYearInt, currentTermInt, currentExamBatchid);
     if(getStdExamResponse[0]['statue'] == false){
       if(mounted){
+        if(GlobalVars.operationCanceled) return;
         Navigator.pop(context);
         showDialog(
           context: context,

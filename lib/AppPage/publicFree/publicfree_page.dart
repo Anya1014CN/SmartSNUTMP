@@ -1428,6 +1428,8 @@ class _PublicFreePageState extends State<PublicFreePage> {
       );
     }
     initPublicFreeDataResponse = [];
+
+    if(GlobalVars.operationCanceled) return;
     initPublicFreeDataResponse = await Modules.initPublicFreeData();
     if(initPublicFreeDataResponse[0]['statue'] == false){
       if (mounted) {
@@ -1594,6 +1596,8 @@ class _PublicFreePageState extends State<PublicFreePage> {
       timeEnd = textSectionEndController.text;
     }
     publicFreeData = [];
+
+    if(GlobalVars.operationCanceled) return;
     List queryPublicFreeDataResponse = await Modules.queryPublicFreeData(selectedClassroomTypeId, selectedCampusId, selectedBuildingId, textSeatsController.text, textClassroomNameController.text, textCycleCountController.text, selectedCycleTypeId, DateFormat('yyyy-MM-dd').format(startDate), DateFormat('yyyy-MM-dd').format(endDate), selectedRoomApplyTypeId, timeBegin, timeEnd, currentPage);
     if(queryPublicFreeDataResponse[0]['status'] == false){
       if (mounted) {
@@ -1625,6 +1629,7 @@ class _PublicFreePageState extends State<PublicFreePage> {
       return;
     }
     if(mounted) {
+      if(GlobalVars.operationCanceled) return;
       setState(() {
         publicFreeData = queryPublicFreeDataResponse[0]['publicFreeData'];
         showResultPage = true;

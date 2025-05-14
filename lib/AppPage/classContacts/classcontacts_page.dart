@@ -340,6 +340,7 @@ class _ClassContactsPageState extends State<ClassContactsPage> {
     List getClassListResponse = await Modules.getClassList();
     if(getClassListResponse[0]['statue'] == false){
       if(mounted){
+        if(GlobalVars.operationCanceled) return;
         Navigator.pop(context);
         showDialog(
           context: context, 
@@ -360,11 +361,14 @@ class _ClassContactsPageState extends State<ClassContactsPage> {
     GlobalVars.classList = getClassListResponse[0]['classList'];
 
     //保存班级列表
+    if(GlobalVars.operationCanceled) return;
     await GlobalVars.globalPrefs.setString('wzxyData-classList', jsonEncode(GlobalVars.classList));
 
     //保存班级成员列表
     for(int i=1;i <= getClassListResponse[0]['classMemberList'].length;i++){
       String classId = getClassListResponse[0]['classMemberList'][i - 1]['classId'];
+
+      if(GlobalVars.operationCanceled) return;
       await GlobalVars.globalPrefs.setString('wzxyData-classMemberList-$classId', jsonEncode(getClassListResponse[0]['classMemberList'][i - 1]['classMemberList']));
     }
 
@@ -372,6 +376,7 @@ class _ClassContactsPageState extends State<ClassContactsPage> {
     //如果账号下存在班级，则自动选中第一个班级
     if(GlobalVars.classList.isNotEmpty){
       if(mounted){
+        if(GlobalVars.operationCanceled) return;
         setState(() {
           selectedClass = 0;
           selectedClassName = GlobalVars.classList.first['name'];
@@ -381,6 +386,7 @@ class _ClassContactsPageState extends State<ClassContactsPage> {
     }
 
     if(mounted){
+      if(GlobalVars.operationCanceled) return;
       setState(() {
         GlobalVars.classList = getClassListResponse[0]['classList'];
       });
@@ -394,6 +400,7 @@ class _ClassContactsPageState extends State<ClassContactsPage> {
     if(GlobalVars.globalPrefs.containsKey('wzxyData-classMemberList-$classId')){
       GlobalVars.classMemberList = jsonDecode(GlobalVars.globalPrefs.getString('wzxyData-classMemberList-$classId')!);
     }
+    if(GlobalVars.operationCanceled) return;
     if(mounted) setState(() {});
   }
 

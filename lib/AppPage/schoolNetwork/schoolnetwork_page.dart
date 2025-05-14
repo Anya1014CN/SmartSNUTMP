@@ -418,7 +418,7 @@ class _SchoolNetworkPage extends State<SchoolNetworkPage>{
   }
 
   networkQuery() async {
-    bool networkQueryCanceled = false;
+    GlobalVars.operationCanceled = false;
     if(mounted){
       showDialog(
         context: context,
@@ -437,7 +437,7 @@ class _SchoolNetworkPage extends State<SchoolNetworkPage>{
           actions: [
             TextButton(
               onPressed: () {
-                networkQueryCanceled = true;
+                GlobalVars.operationCanceled = true;
                 Navigator.pop(context);
               },
               child: Text('取消'),
@@ -446,7 +446,8 @@ class _SchoolNetworkPage extends State<SchoolNetworkPage>{
         ),
       );
     }
-    if(networkQueryCanceled) return;
+
+    if(GlobalVars.operationCanceled) return;
     List schoolNetworkQueryResponse = await Modules.schoolNetworkQuery(textUsernameController.text);
     if(schoolNetworkQueryResponse[0]['statue'] == false) {
       if(mounted) {
@@ -465,6 +466,7 @@ class _SchoolNetworkPage extends State<SchoolNetworkPage>{
       return;
     }
     if(mounted){
+      if(GlobalVars.operationCanceled) return;
       setState(() {
         realName = schoolNetworkQueryResponse[0]['realName'];
         balance = schoolNetworkQueryResponse[0]['balance'];

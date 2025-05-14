@@ -2274,6 +2274,8 @@ class _CourseTablePage extends State<CourseTablePage>{
         },
       );
     }
+
+    if(GlobalVars.operationCanceled) return;
     List getCourseTableResponse = await Modules.getCourseTable(userName, passWord,currentYearInt, currentTermInt);
     if(getCourseTableResponse[0]['statue'] == false){
       if(mounted){
@@ -2301,6 +2303,7 @@ class _CourseTablePage extends State<CourseTablePage>{
     }
 
     //保存课表
+    if(GlobalVars.operationCanceled) return;
     await GlobalVars.globalPrefs.setString('courseTableStd-courseTable-${getCourseTableResponse[0]['semesterId']}', jsonEncode(getCourseTableResponse[0]['courseTableData']));
 
     //保存校历
@@ -2311,16 +2314,24 @@ class _CourseTablePage extends State<CourseTablePage>{
       'termEnd': getCourseTableResponse[0]['termEnd'],
       'termWeeks': getCourseTableResponse[0]['termWeeks'],
     });
-    GlobalVars.globalPrefs.setString('schoolCalendar-${getCourseTableResponse[0]['semesterId']}', jsonEncode(getCourseTableResponse[0]['schoolCalendarData']));
+
+    if(GlobalVars.operationCanceled) return;
+    await GlobalVars.globalPrefs.setString('schoolCalendar-${getCourseTableResponse[0]['semesterId']}', jsonEncode(getCourseTableResponse[0]['schoolCalendarData']));
 
     weekDiff = 0;
     currentWeekInt = userSelectedWeekInt;
     
     GlobalVars.lastCourseTableRefreshTime = DateTime.now().millisecondsSinceEpoch;
+
+    if(GlobalVars.operationCanceled) return;
     await Modules.saveSettings(context);
+
+    if(GlobalVars.operationCanceled) return;
     readSchoolCalendarInfo();
     getWeekDates();
+
     if(mounted){
+      if(GlobalVars.operationCanceled) return;
       Navigator.pop(context);
       setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(

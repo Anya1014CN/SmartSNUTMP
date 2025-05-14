@@ -2193,6 +2193,7 @@ class _HomeState extends State<Home>{
       );
     }
     
+    if(GlobalVars.operationCanceled) return;
     List getCourseTableResponse = await Modules.getCourseTable(GlobalVars.userName, GlobalVars.passWord,currentYearInt, currentTermInt);
     if(getCourseTableResponse[0]['statue'] == false){
       if(mounted){
@@ -2220,6 +2221,7 @@ class _HomeState extends State<Home>{
     }
 
     //保存课表
+    if(GlobalVars.operationCanceled) return;
     await GlobalVars.globalPrefs.setString('courseTableStd-courseTable-${getCourseTableResponse[0]['semesterId']}', jsonEncode(getCourseTableResponse[0]['courseTableData']));
 
     //保存校历
@@ -2230,15 +2232,23 @@ class _HomeState extends State<Home>{
       'termEnd': getCourseTableResponse[0]['termEnd'],
       'termWeeks': getCourseTableResponse[0]['termWeeks'],
     });
+
+    if(GlobalVars.operationCanceled) return;
     GlobalVars.globalPrefs.setString('schoolCalendar-${getCourseTableResponse[0]['semesterId']}', jsonEncode(getCourseTableResponse[0]['schoolCalendarData']));
 
     weekDiff = 0;
     currentWeekInt = userSelectedWeekInt;
     
     GlobalVars.lastCourseTableRefreshTime = DateTime.now().millisecondsSinceEpoch;
+
+    if(GlobalVars.operationCanceled) return;
     await Modules.saveSettings(context);
+
+    if(GlobalVars.operationCanceled) return;
     readSchoolCalendarInfo();
     if(mounted){
+
+      if(GlobalVars.operationCanceled) return;
       Navigator.pop(context);
       setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(
@@ -2253,6 +2263,7 @@ class _HomeState extends State<Home>{
       );
     }
   }
+
   //打开链接
   void launchURL() async {
     textUrlController.text = url.toString();
