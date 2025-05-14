@@ -76,10 +76,11 @@ class Modules {
         data: '[{"OperationType": "Login","Content": [{"UserName": "$userName","PassWord": "$passWord"}]}]'
       );
     }catch(e){
+      print(e);
       message.clear();
       message.add({
         'statue': false,
-        'message': '无法连接服务器，请稍后再试',
+        'message': '无法连接服务器1，请稍后再试',
       });
       return message;
     }
@@ -287,6 +288,7 @@ class Modules {
         data: '[{"OperationType": "CourseTable","Content": [{"UserName": "$userName","PassWord": "$passWord","currentYearInt": "$currentYearInt","currentTermInt": "$currentTermInt"}]}]'
       );
     }catch(e){
+      print(e);
       message.clear();
       message.add({
         'statue': false,
@@ -298,7 +300,7 @@ class Modules {
       message.clear();
       message.add({
         'statue': false,
-        'message': getCourseTableResponse.data[0]['message'],
+        'message': '${getCourseTableResponse.data[0]['message']} 11',
       });
       return message;
     }

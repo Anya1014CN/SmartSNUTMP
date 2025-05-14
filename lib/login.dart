@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage>{
   final textUsernameController = TextEditingController();
   final textPasswordController = TextEditingController();
   final textCaptchaController = TextEditingController();
-  TextEditingController textUrlController = TextEditingController();
+  final textUrlController = TextEditingController();
 
   @override
   void initState() {

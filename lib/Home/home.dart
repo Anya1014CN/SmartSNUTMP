@@ -1299,6 +1299,10 @@ class _HomeState extends State<Home>{
         slivers: [
           SliverList(
             delegate: SliverChildListDelegate.fixed([
+              FilledButton.tonal(
+                onPressed: () => getCourseTable(),
+                child: Text('manual'),
+              ),
               // 问候语区域
               Container(
                 padding: EdgeInsets.fromLTRB(16, 40, 16, 20),
@@ -2188,7 +2192,8 @@ class _HomeState extends State<Home>{
         },
       );
     }
-    List getCourseTableResponse = await Modules.getCourseTable(userName, passWord,currentYearInt, currentTermInt);
+    
+    List getCourseTableResponse = await Modules.getCourseTable(GlobalVars.userName, GlobalVars.passWord,currentYearInt, currentTermInt);
     if(getCourseTableResponse[0]['statue'] == false){
       if(mounted){
         setState(() {});
@@ -2248,7 +2253,6 @@ class _HomeState extends State<Home>{
       );
     }
   }
-
   //打开链接
   void launchURL() async {
     textUrlController.text = url.toString();
